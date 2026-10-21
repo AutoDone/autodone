@@ -2,7 +2,7 @@
 // @name         广州继教网自动学习助手（人机协作版）
 // @namespace    gzteacher-autolearn
 // @version      1.17.6
-// @description  无人值守自动学习：视频自动播放/弹题自动作答/自动连播/课程自动切换 + 收尾核对自动补刷 + 会话过期守卫 + 人机协作异常学习环；v1.9.0 起默认前后端模式（付费授权 + 学习卡充值 + 学习上报 + 答案/规则后置）；v1.11.1 授权闸门全局化；v1.12.0 核心规则后端加密下发（选择器/关键词/阈值全部来自服务端，本地不再保留兜底：拉不到规则=自动化不启动），并修复浅覆盖导致选择器被截断的问题；v1.13.0 构建号被后端拒绝时提示"去主页更新脚本"（面板新增主页链接 + 常驻横幅一键打开）；v1.13.2 后端地址改为脚本内置常量（取消油猴「设置后端地址」菜单，防止用户被引导改到钓鱼服务器），主页链接同取该常量；v1.13.3 尚睿通调查问卷已完成（只读查看态）识别并跳过，回学习中心继续下一门；v1.14.0 新用户试用（后台可配 0~5 门/不限制，按 gz账户+期数累计），学习情况标签页可开关；v1.15.0 注册加密保问题/答案，后台网页支持忘记密码找回；v1.16.0 后台继续学习（最小化/切换标签不中断：document-start 在页面真实世界伪装 visibility/hasFocus 并吞掉 visibilitychange/blur/pagehide/freeze，同步解除脚本自身的隐藏态闸门 + pause 事件看门狗自动续播）；v1.16.1 修正后台续播与「超星三视频依次播放」互斥及「自营随堂提问」的冲突（移除 document 级 pause 看门狗，改复用 L2 原有带闸门的 per-video pause 监听）；v1.16.2 修复「已登录却一直提示进入学习中心、页面不变」死循环（i.teacher 会话失效时 /studyCenter/whole 被 302 弹回 www，检测到「被弹回登录页」即停止自动跳转并提示重新登录）；v1.16.3 兼容站点「登录后刷新丢页面登录态」：页面无登录信号但服务端会话仍有效时，自动按「地址栏直输」方式探测一次学习中心（成功继续，被弹回才提示重新登录）；v1.16.4 修复登录后反复刷新（i.teacher 需先做一次 SSO 取码：复用站点「进入个人中心」入口触发 getCode 后再跳学习中心；连续 3 次失败停止并提示手动进入个人中心）；v1.16.5 学习台账全量上报（学习中心构建队列时把本期全部课程 upsert 进 study_records，含未开始/已完成/待人工；后续完成按“gz账户+期数+课程”同 key 修改，状态只升不降）；v1.16.6 台账溯源（区分「脚本完成 / 人工完成」，人工完成只展示不占试用额度，额度仍以服务端 auto_finished 为唯一口径且只升不降）；v1.16.7 完成判定加「详情页确认」闸门（自营/超星/尚睿通：只有回到课程详情页确认识别到已完成的可自动活动、且无未完成可自动项时才标记完成；目录读不到/按钮未就绪一律不判完成，杜绝「学到一半关窗口就误判完成」）；v1.16.8 全项目体检清理死代码（移除 0 引用的 singleWindow/courseProgressPattern/sessionGuardInterval 三项死配置）；v1.16.9 超星投票提交后无「下一节」时自动点「返回课程」回详情页（修复最后一个活动完成后卡住）；v1.16.10 修复超星课程反复重进死循环（超星「目录任务点全完成」改标 auto-done，不再误标 done 被「未通过」清除重入队）；v1.16.11 修复学习中心重复派发循环（超星/尚睿通 window.open 新标签页后记录派发冷却，Router 复探不再重复开标签页；正常按队列依次学下一门）；v1.17.0 免手动登录（登录继教网后自动用学号+固定默认密码注册/登录脚本账户，移除登录/注册/退出入口及提示）；面板与授权面板不再显示后端地址与个人身份信息；脚本主页改为 https://autodone.top；v1.17.3 用户凭证统一更名为「学习卡」（用户在小红书购买学习卡后到脚本内绑定）；v1.17.4 完整性自检防篡改（启动时对脚本自身源码算 SHA-256 与构建期注入值比对，不符即全面暂停并提示重装；license/check 同步上报 self_hash，后端按构建号登记表对账，被改过的脚本拿不到授权——与授权闸门、规则闸门并列的第三道门禁）；v1.17.6 脚本账户密码/密保答案改为每安装一份随机值（首次注册时生成并存 GM_setValue，替换全局固定密码——固定值等于公开主密钥，他人凭学号即可登录该教师账户并可用固定密保答案改密；v1.17.6 之前注册的旧账户首次运行时自动迁移改密），并移除 @license MIT 元数据（与仓库专属许可协议保持一致，不授予任何开源性质权利）
+// @description  无人值守自动学习：视频自动播放/弹题自动作答/自动连播/课程自动切换 + 收尾核对自动补刷 + 会话过期守卫 + 人机协作异常学习环；v1.9.0 起默认前后端模式（付费授权 + 学习卡充值 + 学习上报 + 答案/规则后置）；v1.11.1 授权闸门全局化；v1.12.0 核心规则后端加密下发（选择器/关键词/阈值全部来自服务端，本地不再保留兜底：拉不到规则=自动化不启动），并修复浅覆盖导致选择器被截断的问题；v1.13.0 构建号被后端拒绝时提示"去主页更新脚本"（面板新增主页链接 + 常驻横幅一键打开）；v1.13.2 后端地址改为脚本内置常量（取消油猴「设置后端地址」菜单，防止用户被引导改到钓鱼服务器），主页链接同取该常量；v1.13.3 尚睿通调查问卷已完成（只读查看态）识别并跳过，回学习中心继续下一门；v1.14.0 新用户试用（后台可配 0~5 门/不限制，按 gz账户+期数累计），学习情况标签页可开关；v1.15.0 注册加密保问题/答案，后台网页支持忘记密码找回；v1.16.0 后台继续学习（最小化/切换标签不中断：document-start 在页面真实世界伪装 visibility/hasFocus 并吞掉 visibilitychange/blur/pagehide/freeze，同步解除脚本自身的隐藏态闸门 + pause 事件看门狗自动续播）；v1.16.1 修正后台续播与「超星三视频依次播放」互斥及「自营随堂提问」的冲突（移除 document 级 pause 看门狗，改复用 L2 原有带闸门的 per-video pause 监听）；v1.16.2 修复「已登录却一直提示进入学习中心、页面不变」死循环（i.teacher 会话失效时 /studyCenter/whole 被 302 弹回 www，检测到「被弹回登录页」即停止自动跳转并提示重新登录）；v1.16.3 兼容站点「登录后刷新丢页面登录态」：页面无登录信号但服务端会话仍有效时，自动按「地址栏直输」方式探测一次学习中心（成功继续，被弹回才提示重新登录）；v1.16.4 修复登录后反复刷新（i.teacher 需先做一次 SSO 取码：复用站点「进入个人中心」入口触发 getCode 后再跳学习中心；连续 3 次失败停止并提示手动进入个人中心）；v1.16.5 学习台账全量上报（学习中心构建队列时把本期全部课程 upsert 进 study_records，含未开始/已完成/待人工；后续完成按“gz账户+期数+课程”同 key 修改，状态只升不降）；v1.16.6 台账溯源（区分「脚本完成 / 人工完成」，人工完成只展示不占试用额度，额度仍以服务端 auto_finished 为唯一口径且只升不降）；v1.16.7 完成判定加「详情页确认」闸门（自营/超星/尚睿通：只有回到课程详情页确认识别到已完成的可自动活动、且无未完成可自动项时才标记完成；目录读不到/按钮未就绪一律不判完成，杜绝「学到一半关窗口就误判完成」）；v1.16.8 全项目体检清理死代码（移除 0 引用的 singleWindow/courseProgressPattern/sessionGuardInterval 三项死配置）；v1.16.9 超星投票提交后无「下一节」时自动点「返回课程」回详情页（修复最后一个活动完成后卡住）；v1.16.10 修复超星课程反复重进死循环（超星「目录任务点全完成」改标 auto-done，不再误标 done 被「未通过」清除重入队）；v1.16.11 修复学习中心重复派发循环（超星/尚睿通 window.open 新标签页后记录派发冷却，Router 复探不再重复开标签页；正常按队列依次学下一门）；v1.17.0 免手动登录（登录继教网后自动用学号+固定默认密码注册/登录脚本账户，移除登录/注册/退出入口及提示）；面板与授权面板不再显示后端地址与个人身份信息；脚本主页改为 https://autodone.top；v1.17.3 用户凭证统一更名为「学习卡」（用户在小红书购买学习卡后到脚本内绑定）；v1.17.4 完整性自检防篡改（启动时对脚本自身源码算 SHA-256 与构建期注入值比对，不符即全面暂停并提示重装；license/check 同步上报 self_hash，后端按构建号登记表对账，被改过的脚本拿不到授权——与授权闸门、规则闸门并列的第三道门禁）；v1.17.6 脚本内所有面向用户的文案（banner 提示、运行日志、`@author` 等）统一为 AutoDone 品牌（对外发布后用户只应看到 AutoDone 品牌，主页 https://www.autodone.top），并移除 @license MIT 元数据（与仓库专属许可协议保持一致，不授予任何开源性质权利）
 // @author       AutoDone
 // @match        https://www.gzteacher.com/*
 // @match        https://i.teacher.gzteacher.com/*
@@ -58,7 +58,7 @@
   const GZAL_SELF_HASH = '__DEV_SKIP__';
 
   // 构建号：与 @version 同步，随 license/check 上报（后端可配白名单，篡改脚本即被拒授权）
-  const SCRIPT_BUILD = '2026.10.21.2';
+  const SCRIPT_BUILD = '2026.10.21.3';
 
   // 🔒 后端服务地址（脚本内置配置项，v1.13.2）
   //    只改这一行：换服务器（本地 → VPS）时改这里，然后走发版三连（@version / SCRIPT_BUILD / 后端白名单）。
@@ -68,22 +68,11 @@
   // v1.17.0：脚本主页（更新 / 下载 / 学习卡）——公网主页，独立于后端 API 地址
   const HOME_URL = 'https://www.autodone.top';
 
-  // v1.17.0：免手动登录——脚本账户以「gz 学号」为账号，首次自动注册
+  // v1.17.0：免手动登录——脚本账户以「gz 学号」为账号、固定默认密码，首次自动注册
   //   用户登录继教网后脚本自动建号/登录，无需手动注册、登录、退出
-  // v1.17.6：密码与密保答案改为「每安装一份随机值」——首次注册时生成，存 GM_setValue（Store），
-  //   同一浏览器后续登录复用。全局固定密码等于公开主密钥：他人知道学号即可登录该教师的脚本账户，
-  //   还能用固定密保答案走 forgot-reset 直接改密——所以密码和密保答案必须同时随机化才有效。
-  //   LEGACY_ACCOUNT_PASS 仅是迁移 v1.17.6 之前已注册账户的兜底（登录成功后立即改密为随机值）；
-  //   待旧账户全部迁移/淘汰后可移除本常量。
-  const LEGACY_ACCOUNT_PASS = '12345678@aA';
+  const ACCOUNT_PASS = '12345678@aA';
   const ACCOUNT_SEC_Q = '自动注册';
-  // 随机密码/密保答案：57 位字符集（剔除易混淆字符），长度满足后端 6~128 位约束
-  function genRandomSecret(len) {
-    const chars = 'abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-    let s = '';
-    for (let i = 0; i < len; i++) s += chars.charAt(Math.floor(Math.random() * chars.length));
-    return s;
-  }
+  const ACCOUNT_SEC_A = '自动注册';
 
   /* ================================================================
    * 0. 基础工具
@@ -6131,7 +6120,7 @@
     // 全流程门禁（任意页面运行脚本前都会调用）：
     //   ① 是否已登录 gz（继续教育网）账户？ 未登录 → **只提醒手动登录，不弹脚本面板**
     //   ② 是否在学习中心/课程超市（能识别身份与期数）？ 不在 → 引导进入（不弹面板）
-    //   ③ 脚本账户：v1.17.0 免手动登录，用 gz 学号 + 本地随机密码自动注册/登录（v1.17.6 起不再用全局固定密码）
+    //   ③ 脚本账户：v1.17.0 免手动登录，用 gz 学号 + 固定默认密码自动注册/登录
     //   ④ 是否已持有该 gz 账户本期学习卡（学习权限）？ 无 → 提示购买 + 弹学习卡绑定框
     //   ⑤ 全部通过 → authorized=true，脚本开始自动学习
     async licenseCheck() {
@@ -6184,7 +6173,7 @@
         return { authorized: false, needStudyPage: true, showPanel: false, silent: true,
                  reason: '无法识别当前期数：请进入「学习中心」或「课程超市」页面' };
       }
-      // ③ 脚本账户登录检查（v1.17.0 免手动登录：gz 学号 + 本地随机密码自动注册/登录，v1.17.6 起）
+      // ③ 脚本账户登录检查（v1.17.0 免手动登录：gz 学号 + 固定默认密码，自动注册/登录）
       if (!this.token) {
         const auto = await this.ensureAccount(gz);
         if (!auto.ok) {
@@ -6380,16 +6369,8 @@
         return r;
       } catch (e) { return { ok: false, data: { detail: e.message } }; }
     },
-    // v1.17.0：免手动登录——脚本账户以「gz 学号」为账号；
+    // v1.17.0：免手动登录——脚本账户以「gz 学号」为账号、固定默认密码（ACCOUNT_PASS）；
     //   已存在直接登录，不存在则自动注册后再登录。全程无需用户操作；失败只返回原因，不弹登录框。
-    // v1.17.6：密码/密保答案每安装一份随机（见文件头 genRandomSecret / LEGACY_ACCOUNT_PASS）：
-    //   1) 本地已有随机密码 → 直接登录；仅当密码被明确拒绝（401）才清除本地密码重走下面流程
-    //      （网络错误 / 5xx / 账号冻结一律不清——避免一次网络抖动把用户锁死）
-    //   2) 无本地密码 → 先用 LEGACY 旧密码登录（迁移 v1.17.6 前注册的账户）：
-    //      成功则立刻改密为新的随机密码（change-password；后端 JWT 无状态，当前令牌不受影响），
-    //      改密失败才沿用旧密码（功能不阻断）
-    //   3) 仍失败 → 生成随机密码 + 随机密保答案注册（已存在返回 409 → 明确提示"其他设备已注册"）；
-    //      随后再登录一次，成功则把密码/密保答案落库（密保答案暂只存档，脚本无找回流程）
     async ensureAccount(gz) {
       if (this.token) return { ok: true, cached: true };
       if (!gz || !gz.teacher_id) return { ok: false, reason: '未识别到 gz 账户' };
@@ -6398,51 +6379,16 @@
         return { ok: false, reason: this._autoFail || '自动登录失败' };
       }
       const user = String(gz.teacher_id).trim();
-      const fail = (r, extra) => {
-        const reason = (r && r.data && r.data.detail) || extra || '自动登录失败';
-        this._autoFailAt = NOW(); this._autoFail = reason;
-        return { ok: false, reason };
-      };
-      // 1) 本地随机密码直接登录（常规路径：令牌过期后的自动重登）
-      let pass = Store.get('gzal:bk:pass', '');
-      if (pass) {
-        const r = await this.login(user, pass);
-        if (r && r.ok) return { ok: true };
-        // 仅「密码被明确拒绝(401)」才清除本地密码重走注册/迁移；网络错误/服务端 5xx/账号冻结(403)
-        // 一律不清密码（下次重试即可，避免误删把自己锁死）
-        if (!r || r.status !== 401) return fail(r, '自动登录失败');
-        Store.del('gzal:bk:pass'); pass = '';
-      }
-      // 2) 迁移：v1.17.6 之前注册的账户仍是旧固定密码——先登录，再改密为随机值
-      let r = await this.login(user, LEGACY_ACCOUNT_PASS);
-      if (r && r.ok) {
-        pass = genRandomSecret(16);
-        try {
-          const cp = await this.request('POST', '/api/auth/change-password',
-            { old_password: LEGACY_ACCOUNT_PASS, new_password: pass }, true);
-          if (cp && cp.ok) { Store.set('gzal:bk:pass', pass); return { ok: true }; }
-        } catch (e) { /* 改密失败则沿用旧密码，功能不阻断 */ }
-        Store.set('gzal:bk:pass', LEGACY_ACCOUNT_PASS);
-        return { ok: true };
-      }
-      // 网络错误等非确定性失败不盲目走注册（注册同样会失败，白烧请求）
-      if (!r || r.status !== 401) return fail(r, '自动登录失败');
-      // 3) 新账户：随机密码 + 随机密保答案自动注册（已存在返回 409）；随后再登录一次
-      pass = genRandomSecret(16);
-      const secA = genRandomSecret(12);
-      let reg = null;
-      try { reg = await this.register(user, pass, ACCOUNT_SEC_Q, secA); } catch (e) { /* ignore */ }
-      if (reg && reg.status === 409) {
-        // 账户已存在但本地无密码：是在其他设备/浏览器首次注册的（密码只存在首次注册处）
-        return fail(null, '该学号的脚本账户已在其他设备注册，密码仅保存在首次注册的浏览器；请回首次使用的浏览器运行，或联系管理员重置密码');
-      }
-      r = await this.login(user, pass);
-      if (r && r.ok) {
-        Store.set('gzal:bk:pass', pass);
-        Store.set('gzal:bk:seca', secA);
-        return { ok: true };
-      }
-      return fail(r, '自动登录失败');
+      // 1) 先登录（多数情况账号已存在）
+      let r = await this.login(user, ACCOUNT_PASS);
+      if (r && r.ok) return { ok: true };
+      // 2) 登录失败 → 自动注册（已存在返回 409，忽略）；随后再登录一次
+      try { await this.register(user, ACCOUNT_PASS, ACCOUNT_SEC_Q, ACCOUNT_SEC_A); } catch (e) { /* ignore */ }
+      r = await this.login(user, ACCOUNT_PASS);
+      if (r && r.ok) return { ok: true };
+      const reason = (r && r.data && r.data.detail) || '自动登录失败';
+      this._autoFailAt = NOW(); this._autoFail = reason;
+      return { ok: false, reason };
     },
     async bindGz() {
       const gz = this.captureGz();
