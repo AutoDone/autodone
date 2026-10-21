@@ -3,7 +3,7 @@
 > 广州市中小学教师继续教育网（gzteacher.com）无人值守自动学习油猴脚本
 > **视频自动播放 · 弹题自动作答 · 课程自动切换 · 收尾核对自动补刷 · 最小化不中断**
 
-**当前版本 v1.17.6** · 主页：[https://www.autodone.top](https://www.autodone.top) · 许可：[专属许可协议](#-许可协议非开源)
+**当前版本 v1.17.8** · 主页：[https://www.autodone.top](https://www.autodone.top) · 许可：[专属许可协议](#-许可协议非开源)
 
 ---
 
@@ -86,7 +86,7 @@ Gitee仓库/
 ├── gzteacher-autolearn.user.js  # 当前发行版（可安装运行，与最新 Release 附件一致）
 ├── src/
 │   └── gzteacher-autolearn.user.js  # 油猴脚本源码（开发版，仅供查阅学习，不可直接运行）
-├── 发布说明-v1.17.6.md          # Release 发布说明
+├── 发布说明-v1.17.8.md          # Release 发布说明
 └── docs/                       # 宣传图片素材
     ├── 宣传海报.png
     └── 继教网首页.png
